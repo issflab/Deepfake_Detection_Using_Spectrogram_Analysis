@@ -1,34 +1,38 @@
 # 🎙️ Deepfake Detection Using Spectrogram Analysis
 
-## Overview
+## 📖 Overview
 This repository contains all core scripts and utilities for **deepfake detection research** using **spectrogram analysis** and **CNN-based models**.  
 It provides a **modular and reproducible pipeline** to process audio data, generate spectrograms, simulate laundering attacks, and train/evaluate deep learning models.
 
-The goal is a **scalable, attack-resilient workflow** for reproducible experiments on benchmark datasets.
+The goal of this codebase is to create a **scalable, attack-resilient workflow** that enables reproducible experiments on benchmark datasets.
 
 ---
 
-## Folder Structure
+## 📂 Folder Structure
 
+```bash
 scripts/
 │
-├── generation_scripts/
-│   ├── csv_generation/
+├── generation_scripts/                
+│   ├── csv_generation/                
 │   │   ├── gen_csv.py                 # Generate CSV files with spectrogram paths + labels
 │   │   └── README.md
+│   │
 │   ├── dataset_builder/
-│   │   ├── balanced_dataset_builder.py # Build balanced dataset (original vs fake samples)
+│   │   ├── balanced_dataset_builder.py# Build balanced dataset (original vs fake samples)
 │   │   └── README.md
+│   │
 │   ├── laundering_attack_implementation/
 │   │   ├── laundering.py              # Implements laundering attacks (noise, reverb, resample, etc.)
 │   │   ├── stochastic_attack.py       # Automates attack pipelines across datasets
-│   │   ├── noises/
+│   │   ├── noises/                    
 │   │   │   ├── babble.wav
 │   │   │   ├── cafe.wav
 │   │   │   ├── street.wav
 │   │   │   ├── volvo.wav
 │   │   │   └── white.wav
 │   │   └── README.md
+│   │
 │   └── spectrogram_generation/
 │       ├── gen_spectra.py             # Convert audio to spectrogram images
 │       └── README.md
@@ -41,9 +45,9 @@ scripts/
 
 ⸻
 
-Workflow Pipeline
+⚡ Workflow Pipeline
 
-1) Data Preparation
+1️⃣ Data Preparation
 
 Collect raw audio files (.wav) and prepare the dataset.
 
@@ -60,7 +64,7 @@ python scripts/generation_scripts/csv_generation/gen_csv.py \
 
 ⸻
 
-2) Laundering Attack Simulation (optional)
+2️⃣ Laundering Attack Simulation (optional)
 
 Apply predefined or randomized laundering attacks for robustness testing.
 
@@ -77,7 +81,7 @@ python scripts/generation_scripts/laundering_attack_implementation/stochastic_at
 
 ⸻
 
-3) Spectrogram Generation
+3️⃣ Spectrogram Generation
 
 Convert .wav audio files into spectrogram .png images.
 
@@ -88,9 +92,9 @@ python scripts/generation_scripts/spectrogram_generation/gen_spectra.py \
 
 ⸻
 
-4) Model Training
+4️⃣ Model Training
 
-Train a ResNet-18 CNN on spectrograms.
+Train a ResNet-18 CNN model on spectrograms.
 
 python scripts/model_training_and_testing/deepfake_detection_cnn_resnet_18.py \
   --data ./spectrograms \
@@ -105,7 +109,7 @@ Includes:
 
 ⸻
 
-5) Model Evaluation
+5️⃣ Model Evaluation
 
 Evaluate the trained model on the test dataset.
 
@@ -116,9 +120,9 @@ python scripts/model_training_and_testing/evaluate_resnet18_deepfake.py \
 
 ⸻
 
-Requirements
+🔧 Requirements
 
-Create a requirements.txt:
+Create a requirements.txt file:
 
 torch
 torchvision
@@ -142,7 +146,7 @@ pip install -r requirements.txt
 
 ⸻
 
-Example Experiment Workflow
+📊 Example Experiment Workflow
 
 # 1) Prepare balanced dataset
 python scripts/generation_scripts/dataset_builder/balanced_dataset_builder.py \
@@ -170,16 +174,16 @@ python scripts/model_training_and_testing/evaluate_resnet18_deepfake.py \
 
 ⸻
 
-Outputs
-	•	Spectrogram PNGs (preprocessed features)
-	•	CSV metadata with file paths and labels
-	•	Augmented datasets (with attacks applied)
-	•	Trained CNN models (.pth checkpoints)
-	•	Evaluation reports (confusion matrix, classification report)
+📈 Outputs
+	•	✅ Spectrogram PNGs (preprocessed features)
+	•	✅ CSV metadata with file paths and labels
+	•	✅ Augmented datasets (with attacks applied)
+	•	✅ Trained CNN models (.pth checkpoints)
+	•	✅ Evaluation reports (confusion matrix, classification report)
 
 ⸻
 
-Key Features
+🧩 Key Features
 	•	Modular pipeline for reproducible experiments
 	•	Laundering attack implementations (noise, reverb, resampling, compression)
 	•	Configurable spectrogram generation
@@ -188,14 +192,14 @@ Key Features
 
 ⸻
 
-Contribution Guidelines
+🙌 Contribution Guidelines
 	•	Use snake_case for Python scripts
 	•	Place new attacks or models in relevant subfolders
 	•	Add README.md files in subfolders for script-specific instructions
 
 ⸻
 
-Citation
+📚 Citation
 
 If you use this codebase for your research, please cite:
 
@@ -205,3 +209,5 @@ If you use this codebase for your research, please cite:
   year         = {2025},
   institution  = {University of Michigan-Dearborn}
 }
+
+---
