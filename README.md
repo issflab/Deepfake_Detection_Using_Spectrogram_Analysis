@@ -12,8 +12,8 @@ The goal of this codebase is to create a **scalable, attack-resilient workflow**
 
 scripts/
 │
-├── generation_scripts/                # Dataset generation & preprocessing utilities
-│   ├── csv_generation/
+├── generation_scripts/                
+│   ├── csv_generation/                
 │   │   ├── gen_csv.py                 # Generate CSV files with spectrogram paths + labels
 │   │   └── README.md
 │   │
@@ -24,7 +24,7 @@ scripts/
 │   ├── laundering_attack_implementation/
 │   │   ├── laundering.py              # Implements laundering attacks (noise, reverb, resample, etc.)
 │   │   ├── stochastic_attack.py       # Automates attack pipelines across datasets
-│   │   ├── noises/                    # Background noise samples
+│   │   ├── noises/                    
 │   │   │   ├── babble.wav
 │   │   │   ├── cafe.wav
 │   │   │   ├── street.wav
@@ -37,34 +37,36 @@ scripts/
 │       └── README.md
 │
 └── model_training_and_testing/
-├── deepfake_detection_cnn_resnet_18.py   # Train ResNet-18 CNN on spectrogram dataset
-├── evaluate_resnet18_deepfake.py         # Evaluate trained model (metrics, confusion matrix)
-└── README.md
+    ├── deepfake_detection_cnn_resnet_18.py   # Train ResNet-18 CNN on spectrogram dataset
+    ├── evaluate_resnet18_deepfake.py         # Evaluate trained model (metrics, confusion matrix)
+    └── README.md
 
----
 
-## ⚡ Workflow Pipeline
+⸻
 
-### 1️⃣ Data Preparation
-- Collect raw audio files (`.wav`) from dataset(s).  
-- Build a balanced dataset:
-```bash```
+⚡ Workflow Pipeline
+
+1️⃣ Data Preparation
+
+Collect raw audio files (.wav) and prepare the dataset.
+
+# Build a balanced dataset
 python scripts/generation_scripts/dataset_builder/balanced_dataset_builder.py --input ./audio --output ./balanced_data
 
-	•	Generate CSV metadata:
-
+# Generate CSV metadata
 python scripts/generation_scripts/csv_generation/gen_csv.py --input ./spectrograms --output metadata.csv
 
 
 ⸻
 
-2️⃣ Laundering Attack Simulation (optional, for robustness testing)
-	•	Apply predefined attacks (e.g., reverberation, resampling, compression, noise):
+2️⃣ Laundering Attack Simulation (Optional)
 
+Apply predefined or randomized laundering attacks for robustness testing.
+
+# Apply reverberation attack
 python scripts/generation_scripts/laundering_attack_implementation/laundering.py --input ./audio --attack reverberation
 
-	•	Run stochastic (randomized) attacks:
-
+# Run stochastic attacks
 python scripts/generation_scripts/laundering_attack_implementation/stochastic_attack.py --input ./audio --output ./attacked_data
 
 
@@ -72,7 +74,7 @@ python scripts/generation_scripts/laundering_attack_implementation/stochastic_at
 
 3️⃣ Spectrogram Generation
 
-Convert .wav audio to spectrogram PNGs:
+Convert .wav audio files into spectrogram .png images.
 
 python scripts/generation_scripts/spectrogram_generation/gen_spectra.py --input ./balanced_data --output ./spectrograms
 
@@ -81,7 +83,7 @@ python scripts/generation_scripts/spectrogram_generation/gen_spectra.py --input 
 
 4️⃣ Model Training
 
-Train a ResNet-18 CNN:
+Train a ResNet-18 CNN model on spectrograms.
 
 python scripts/model_training_and_testing/deepfake_detection_cnn_resnet_18.py \
     --data ./spectrograms \
@@ -90,15 +92,15 @@ python scripts/model_training_and_testing/deepfake_detection_cnn_resnet_18.py \
     --lr 0.001
 
 Includes:
-	•	Train/Validation/Test split (70/15/15).
-	•	Data augmentation (random crops, flips).
-	•	Early stopping & checkpoint saving.
+	•	Train/Validation/Test split (70/15/15)
+	•	Data augmentation (random crops, flips)
+	•	Early stopping & checkpoint saving
 
 ⸻
 
 5️⃣ Model Evaluation
 
-Evaluate trained model:
+Evaluate the trained model on the test dataset.
 
 python scripts/model_training_and_testing/evaluate_resnet18_deepfake.py \
     --model ./checkpoints/best_model.pth \
@@ -107,9 +109,9 @@ python scripts/model_training_and_testing/evaluate_resnet18_deepfake.py \
 
 ⸻
 
-Requirements
+🔧 Requirements
 
-Create a requirements.txt:
+Create a requirements.txt file:
 
 torch
 torchvision
@@ -133,56 +135,52 @@ pip install -r requirements.txt
 
 ⸻
 
-Example Experiment Workflow
-	1.	Prepare balanced dataset:
+📊 Example Experiment Workflow
 
+# 1. Prepare balanced dataset
 python balanced_dataset_builder.py --input ./raw_audio --output ./balanced_data
 
-	2.	Apply laundering attacks:
-
+# 2. Apply laundering attacks
 python laundering.py --input ./balanced_data --attack resample_22050
 
-	3.	Generate spectrograms:
-
+# 3. Generate spectrograms
 python gen_spectra.py --input ./balanced_data --output ./spectrograms
 
-	4.	Train ResNet-18:
-
+# 4. Train ResNet-18
 python deepfake_detection_cnn_resnet_18.py --data ./spectrograms
 
-	5.	Evaluate:
-
+# 5. Evaluate model
 python evaluate_resnet18_deepfake.py --model ./checkpoints/best_model.pth
 
 
 ⸻
 
-Outputs
-	•	Spectrogram PNGs (preprocessed features).
-	•	CSV metadata with file paths + labels.
-	•	Augmented datasets (with attacks applied).
-	•	Trained CNN models (.pth checkpoints).
-	•	Evaluation reports (confusion matrix, classification report).
+📈 Outputs
+	•	✅ Spectrogram PNGs (preprocessed features)
+	•	✅ CSV metadata with file paths + labels
+	•	✅ Augmented datasets (with attacks applied)
+	•	✅ Trained CNN models (.pth checkpoints)
+	•	✅ Evaluation reports (confusion matrix, classification report)
 
 ⸻
 
-Key Features
-	•	Modular pipeline for reproducible experiments.
-	•	Implements laundering attacks (noise, reverb, resampling, compression).
-	•	Spectrogram generation with configurable parameters.
-	•	Deep learning training using CNN (ResNet-18) with transfer learning.
-	•	Evaluation metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix.
+🧩 Key Features
+	•	Modular pipeline for reproducible experiments
+	•	Laundering attack implementations (noise, reverb, resampling, compression)
+	•	Configurable spectrogram generation
+	•	CNN model training with transfer learning
+	•	Evaluation metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix
 
 ⸻
 
-Contribution Guidelines
-	•	Follow naming conventions (snake_case for Python scripts).
-	•	Add new attacks or models under relevant subfolders.
-	•	Use README.md in subfolders for script-specific instructions.
+🙌 Contribution Guidelines
+	•	Use snake_case for Python scripts
+	•	Place new attacks or models in relevant subfolders
+	•	Add README.md files in subfolders for specific instructions
 
 ⸻
 
-Citation
+📚 Citation
 
 If you use this codebase for your research, please cite:
 
